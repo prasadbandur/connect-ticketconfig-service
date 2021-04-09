@@ -1,8 +1,6 @@
 package com.goeuro.ticketconfig.offerstore;
 
 import com.goeuro.coverage.offer.store.protobuf.BookingOffer;
-import com.goeuro.coverage.offer.store.protobuf.OfferStoreDocument;
-import com.goeuro.coverage.offer.store.protobuf.PutBookingOfferResponse;
 import com.goeuro.search2.pi.proto.OfferDetailsQuery;
 import com.goeuro.search2.pi.proto.OfferDetailsResponse;
 import com.goeuro.ticketconfig.utils.ReactiveUtil;
@@ -21,22 +19,6 @@ public class OfferStore {
   private static final JsonFormat.Parser JSON_PARSER = JsonFormat.parser();
 
   private final ConnectOfferStoreGrpcClient storeGrpcClient;
-
-  public Mono<PutBookingOfferResponse> putOffer(OfferStoreDocument document) {
-    var offerStoreId = document.getMetadata().getProviderQueryId();
-    var provider = document.getMetadata().getProviderDbId();
-    log.info(
-            "Processing put offer for providerQueryId: {} and provider: {}", offerStoreId, provider);
-    return storeGrpcClient
-            .putOffers(document)
-            .onErrorResume(
-                    throwable ->
-                            ReactiveUtil.createMonoError(
-                                    throwable,
-                                    String.format(
-                                            "Error saving offer with offerStoreId: %s and provider: %s",
-                                            offerStoreId, provider)));
-  }
 
   public Mono<OfferDetailsResponse> getOffer(OfferDetailsQuery query) {
     log.info(
