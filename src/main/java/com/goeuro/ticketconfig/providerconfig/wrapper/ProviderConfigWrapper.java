@@ -11,16 +11,13 @@ public class ProviderConfigWrapper {
 
   @Getter private final SearchConfigWrapper search;
   @Getter private final AdditionalServicesWrapper additionalServices;
-  @Getter private final BookingConfigWrapper booking;
   @Getter private final PassengerAgeRangesConfigWrapper passengerAgeRanges;
   @Getter private final CarriersConfigWrapper carriers;
 
   public ProviderConfigWrapper(ProviderConfig providerConfig) {
     this.providerConfig = providerConfig;
-
     search = new SearchConfigWrapper(providerConfig);
     additionalServices = new AdditionalServicesWrapper(providerConfig);
-    booking = new BookingConfigWrapper(providerConfig);
     passengerAgeRanges = new PassengerAgeRangesConfigWrapper(providerConfig);
     carriers = new CarriersConfigWrapper(providerConfig);
   }
